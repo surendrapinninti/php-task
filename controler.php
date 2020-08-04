@@ -82,7 +82,7 @@ $sql=mysqli_query($conn,"INSERT INTO `users`(`firstname`, `lastname`, `email`, `
 
 if ($sql) {
   echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>user added!</strong> 
+  <strong>User Added Successfully &#x1F44D;</strong> 
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -153,7 +153,7 @@ $sql=mysqli_query($conn,"UPDATE `users` SET `firstname`='$firstname',`lastname`=
 
 if ($sql) {
   echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>user added!</strong> 
+  <strong>Customer Updated Successfully &#x1F44D;</strong> 
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -168,13 +168,13 @@ if (isset($_POST['userid']) && $_POST['status']=="delete") {
 
   if($sql){
     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>user deleted!</strong> 
+    <strong>User Deleted Successfully &#x1F44D; </strong> 
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>';
   }
-    # code...
+   
 }
 
 

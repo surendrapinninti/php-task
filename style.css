@@ -33,6 +33,7 @@ main,
 menu,
 nav,
 section {
+    padding-top: 100px !important;
     display: block
 }
 

@@ -7,8 +7,8 @@
    while($row = mysqli_fetch_assoc($sql)) {
        $id=$row['user_id'];
        $row['sno']=$i;
-    $row['edit']='<button type="button" class="btn btn-success btn-sm "  onclick="edit('.$id.')" >edit</button>';
-    $row['delete']='<button type="submit" id="submit" onclick="deleteuser('.$id.')" class="btn btn-danger btn-sm">Delete</button';
+    $row['edit']='<button type="button" class="btn btn-success btn-sm "  onclick="edit('.$id.')" data-toggle="modal" data-target="#edituser" >edit</button>';
+    $row['delete']='<button type="submit" id="submit" onclick="deleteuser('.$id.')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletemodal">Delete</button';
         $i++;
     $array[] = $row;
 }

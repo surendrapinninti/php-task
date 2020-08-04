@@ -10,203 +10,352 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.2/css/colReorder.dataTables.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <!-- section start -->
     <section>
         <div class="container">
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item  nav-link " id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Add</a>
-                    <a class="nav-item nav-link " id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">View</a>
 
-                </div>
-            </nav>
-            <div id="msg"></div>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <div class="container">
-                        <!-- add user start -->
 
-                        <h1 class="text-center  p-8">Add Customer</h1>
-                        <hr>
-                        <form id="adduser" method="POST" lass="needs-validation" novalidate>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputName">First Name</label>
-                                    <input type="text" class="form-control" name="firstname" id="inputName" placeholder="ex. suru">
+
+            <!-- Modal -->
+            <div class="modal fade" id="newuser" tabindex="-1" role="dialog" aria-labelledby="newuserLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title text-center" id="newuserLabel">Add Customer</h1>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="adduser" method="POST" lass="needs-validation" novalidate>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputName">First Name</label>
+                                        <input type="text" class="form-control" name="firstname" id="inputName" placeholder="ex. suru">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputName">Last Name</label>
+                                        <input type="text" class="form-control" name="lastname" id="inputName2" placeholder="ex. pinninti">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputName">Last Name</label>
-                                    <input type="text" class="form-control" name="lastname" id="inputName2" placeholder="ex. pinninti">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputemail">Email</label>
+                                        <input type="email" class="form-control" name="email" id="inputemail" placeholder="ex. test@gmail.com">
+                                        <div class="err"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputAddress2">Phone</label>
+                                        <input type="text" class="form-control" name="phone" id="inputPhone" placeholder="ex. 96543210">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputemail">Email</label>
-                                    <input type="email" class="form-control" name="email" id="inputemail" placeholder="ex. test@gmail.com">
-                                    <div class="err"></div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputAddress2">Phone</label>
-                                    <input type="text" class="form-control" name="phone" id="inputPhone" placeholder="ex. 96543210">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">country</label>
-                                    <select id="inputcountry" name="country" class="form-control country">
-                                  <option selected>Choose...</option>
-                                  <option value="india">India</option>
-                                  <option value="usa">Usa</option>
-                                  <option value="uk">Uk</option>
-                                </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">State</label>
-                                    <div id="state"></div>
-                                    <select id="State" class="form-control state">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">country</label>
+                                        <select id="inputcountry" name="country" class="form-control country">
                                       <option selected>Choose...</option>
-                                </select>
+                                      <option value="india">India</option>
+                                      <option value="usa">Usa</option>
+                                      <option value="uk">Uk</option>
+                                    </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">State</label>
+                                        <div id="state"></div>
+                                        <select id="State" class="form-control state">
+                                          <option selected>Choose...</option>
+                                    </select>
 
 
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputZip">Pincode</label>
-                                    <input type="text" class="form-control" name="pincode" id="inputZip" placeholder="ex. 534401">
-                                </div>
-                                <div class="form-group col-md-6">
-
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile03">
-                                        <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
                                     </div>
                                 </div>
-                                <div id="preview"></div>
-                            </div>
-                    </div>
-                    <button type="submit" id="submit" class="btn btn-primary">Sign in</button>
-
-
-                    </form>
-
-                </div>
-                <!-- add user end -->
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <div id="deletemsg"></div>
-                    <!-- list of users satrt  -->
-                    <h1>All customers</h1>
-                    <table id="example" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>firstname</th>
-                                <th>lastname</th>
-                                <th>email</th>
-                                <th>phone.</th>
-                                <th>country</th>
-                                <th>state</th>
-                                <th>pincode</th>
-                                <th>edit</th>
-                                <th>delete</th>
-
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>id</th>
-                                <th>firstname</th>
-                                <th>lastname</th>
-                                <th>email</th>
-                                <th>phone.</th>
-                                <th>country</th>
-                                <th>state</th>
-                                <th>pincode</th>
-                                <th>edit</th>
-                                <th>delete</th>
-
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <!-- list of users end -->
-                    <div id="rem" style="display: none;">
-                        <!--edit user  -->
-                        <h1 class="text-center  p-8">Edit Customer</h1>
-                        <div id="updatemsg"></div>
-                        <hr>
-                        <form id="updateuser" method="POST" lass="needs-validation" novalidate>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputName">First Name</label>
-                                    <input type="text" class="form-control" name="updatefirstname" id="updatefirstname" placeholder="ex. suru">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputName">Last Name</label>
-                                    <input type="text" class="form-control" name="updatelastname" id="updatelastname" placeholder="ex. pinninti">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputemail">Email</label>
-                                    <input type="email" class="form-control" name="updateemail" id="updateemail" placeholder="ex. test@gmail.com">
-                                    <div class="err"></div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputAddress2">Phone</label>
-                                    <input type="text" class="form-control" name="number" id="number" placeholder="ex. 96543210">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">country</label>
-                                    <input type="text" class="form-control" name="updatecountry" id="updatecountry" placeholder="ex. india">
-
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">State</label>
-                                    <input type="text" class="form-control" name="updatestate" id="updatestate" placeholder="ex. india">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputZip">Pincode</label>
-                                    <input type="text" class="form-control" name="updatepincode" id="updatepincode" placeholder="ex. 534401">
-                                </div>
-                                <div class="form-group col-md-6">
-
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="updateimg">
-                                        <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputZip">Pincode</label>
+                                        <input type="text" class="form-control" name="pincode" id="inputZip" placeholder="ex. 534401">
                                     </div>
+                                    <div class="form-group col-md-6">
+
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile03">
+                                            <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                                        </div>
+                                    </div>
+                                    <div id="preview"></div>
                                 </div>
 
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <button type="submit" id="submit" class="btn btn-primary">update</button>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <!-- <label for="inputAddress2">Phone</label> -->
-                                    <img src="" id="img" width="100%" height="50%" alt="" srcset="">
-                                </div>
-                            </div>
+
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" id="submit" class="btn btn-primary">Sign in</button>
+
+                        </div>
+                        </form>
                     </div>
-                    <input type="hidden" id="userid" name="userid">
-
-
-                    </form>
                 </div>
             </div>
-            <!-- edit user end -->
-        </div>
 
-        </div>
+            <div id="msg"></div>
+
+            <div id="deletemsg"></div>
+            <div class="row">
+                <div class="col text-left">
+                    <h1>All customers</h1>
+                </div>
+                <div class="col">
+                    <div class="text-right " style="padding-top: 20px;">
+
+                        <button type="button" class="btn btn-primary mt" data-toggle="modal" data-target="#newuser">
+                            Add New Customer
+                          </button>
+                    </div>
+                </div>
+            </div>
 
 
+            <!-- list of users satrt  -->
+
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>firstname</th>
+                        <th>lastname</th>
+                        <th>email</th>
+                        <th>phone.</th>
+                        <th>country</th>
+                        <th>state</th>
+                        <th>pincode</th>
+                        <th>edit</th>
+                        <th>delete</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>id</th>
+                        <th>firstname</th>
+                        <th>lastname</th>
+                        <th>email</th>
+                        <th>phone.</th>
+                        <th>country</th>
+                        <th>state</th>
+                        <th>pincode</th>
+                        <th>edit</th>
+                        <th>delete</th>
+
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- list of users end -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Delete user</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                        </div>
+                        <div class="modal-body">
+                            <h1 class="text-center">Are you sure?</h1>
+
+                            <input type="hidden" id="deleteuserid" name="deleteid">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="deleteuser" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--edit user  -->
+
+            <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">update user</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h1 class="text-center  p-8">Edit Customer</h1>
+                            <div id="updatemsg"></div>
+
+                            <form id="updateuser" method="POST" lass="needs-validation" novalidate>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputName">First Name</label>
+                                        <input type="text" class="form-control" name="updatefirstname" id="updatefirstname" placeholder="ex. suru">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputName">Last Name</label>
+                                        <input type="text" class="form-control" name="updatelastname" id="updatelastname" placeholder="ex. pinninti">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputemail">Email</label>
+                                        <input type="email" class="form-control" name="updateemail" id="updateemail" placeholder="ex. test@gmail.com">
+                                        <div class="err"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputAddress2">Phone</label>
+                                        <input type="text" class="form-control" name="number" id="number" placeholder="ex. 96543210">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">country</label>
+                                        <input type="text" class="form-control" name="updatecountry" id="updatecountry" placeholder="ex. india">
+
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">State</label>
+                                        <input type="text" class="form-control" name="updatestate" id="updatestate" placeholder="ex. india">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputZip">Pincode</label>
+                                        <input type="text" class="form-control" name="updatepincode" id="updatepincode" placeholder="ex. 534401">
+                                    </div>
+                                    <div class="form-group col-md-6">
+
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="updateimg">
+                                            <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <input type="hidden" id="userid" name="userid">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <!-- <label for="inputAddress2">Phone</label> -->
+                                        <img src="" id="img" width="100%" height="50%" alt="" srcset="">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" id="submit" class="btn btn-primary">update</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- edit user end -->
+
+
+                <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h1 class="text-center  p-8">Edit Customer</h1>
+                                <div id="updatemsg"></div>
+
+                                <form id="updateuser" method="POST" lass="needs-validation" novalidate>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputName">First Name</label>
+                                            <input type="text" class="form-control" name="updatefirstname" id="updatefirstname" placeholder="ex. suru">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputName">Last Name</label>
+                                            <input type="text" class="form-control" name="updatelastname" id="updatelastname" placeholder="ex. pinninti">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputemail">Email</label>
+                                            <input type="email" class="form-control" name="updateemail" id="updateemail" placeholder="ex. test@gmail.com">
+                                            <div class="err"></div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputAddress2">Phone</label>
+                                            <input type="text" class="form-control" name="number" id="number" placeholder="ex. 96543210">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">country</label>
+                                            <input type="text" class="form-control" name="updatecountry" id="updatecountry" placeholder="ex. india">
+
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">State</label>
+                                            <input type="text" class="form-control" name="updatestate" id="updatestate" placeholder="ex. india">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputZip">Pincode</label>
+                                            <input type="text" class="form-control" name="updatepincode" id="updatepincode" placeholder="ex. 534401">
+                                        </div>
+                                        <div class="form-group col-md-6">
+
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="updateimg">
+                                                <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="hidden" id="userid" name="userid">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <!-- <label for="inputAddress2">Phone</label> -->
+                                            <img src="" id="img" width="100%" height="50%" alt="" srcset="">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" id="submit" class="btn btn-primary">update</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
 
     </section>
 
@@ -403,6 +552,7 @@
                             $("#msg").html(res);
 
                             $("#adduser").trigger("reset");
+                            $('#newuser').modal('toggle');
 
                         },
                     });
@@ -520,6 +670,8 @@
 
                             $("#updateuser").trigger("reset");
 
+                            $('#edituser').modal('toggle');
+
                         },
                     });
                     return false;
@@ -527,7 +679,29 @@
 
             });
 
+            $("#deleteuser").click(function() {
 
+                let deleteuserid = $("#deleteuserid").val();
+
+                // alert(deleteuserid);
+
+                $.ajax({
+                    type: "POST",
+                    url: "controler.php",
+                    data: {
+                        "userid": deleteuserid,
+                        "status": "delete"
+                    },
+
+                    success: function(response) {
+                        $("#deletemsg").html(response);
+
+                        $('#deletemodal').modal('toggle');
+
+                    }
+                });
+
+            })
 
 
             setInterval(function() {
@@ -581,22 +755,9 @@
 
         function deleteuser(id) {
 
-            if (confirm("Are you sure?")) {
-                $.ajax({
-                    type: "POST",
-                    url: "controler.php",
-                    data: {
-                        "userid": id,
-                        "status": "delete"
-                    },
+            $("#deleteuserid").val(id);
 
-                    success: function(response) {
-                        $("#deletemsg").html(response);
 
-                    }
-                });
-
-            }
 
 
         }
@@ -604,3 +765,7 @@
 </body>
 
 </html>
+
+
+
+<!-- Button trigger modal -->
