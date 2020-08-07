@@ -4,23 +4,30 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 include_once("db.php");
 
 
+
+
 /// displying state according to country ///
 if (isset($_POST['country']) && $_POST['type']=="select") {
 
 $country=$_POST['country'];
     $countryArr = array(
-        "usa" => array("New Yourk", "Los Angeles", "California"),
-        "india" => array("Mumbai", "New Delhi", "Bangalore"),
-        "uk" => array("London", "Manchester", "Liverpool")
+        "usa" => array("Choose...","New Yourk", "Los Angeles", "California"),
+        "india" => array("Choose...","Mumbai", "New Delhi", "Bangalore"),
+        "uk" => array("Choose...","London", "Manchester", "Liverpool")
     );
 
 if ($country !=='select') {
 
-    echo '<select id="inputState" name="state"  class="form-control state-selected">';
+
+
+$option=[];
+    
     foreach($countryArr[$country] as $value){
-        echo "<option vlaue='$value'>". $value . "</option>";
+                 array_push($option,$value);
+      
     }
-    echo "</select>";
+
+   echo json_encode($option);
 
 }
 
@@ -41,15 +48,23 @@ $valid_extensions = array('jpeg', 'jpg','png');
         $ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
         if($size > 2097152) 
         {
-            echo json_encode(array("statusCode"=>400,'msg'=>"Image allowd less than 2 mb"));
+$msg=["statusCode"=>400,'msg'=>"Image allowd less than 2 mb"];
+          
+            echo json_encode(array($msg));
         }
         else if(!in_array($ext, $valid_extensions)) {
-            echo json_encode(array("statusCode"=>400,'msg'=>$ext.' not allowed'));
+          $msg=["statusCode"=>400,'msg'=>$ext.' not allowed'];
+          
+            echo json_encode(array($msg));
+           
         }
         else{
            
             move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' .$_FILES['file']['name'] );
-            echo $_FILES['file']['name'];
+            $msg=["statusCode"=>200,'img'=>$_FILES['file']['name']];
+          
+            echo json_encode(array($msg));
+           
                    }
         
     
@@ -81,12 +96,12 @@ $sql=mysqli_query($conn,"INSERT INTO `users`(`firstname`, `lastname`, `email`, `
 
 
 if ($sql) {
-  echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>User Added Successfully &#x1F44D;</strong> 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>';
+
+$data=["msg"=>"User Added Successfully"];
+
+
+
+  echo json_encode(array($data));
 }
     
    
@@ -152,12 +167,14 @@ if (isset($_POST['updateemail']) && isset($_POST['updatefirstname']) ) {
 $sql=mysqli_query($conn,"UPDATE `users` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`country`='$country',`state`='$state',`pincode`='$pincode',`img`='$image' WHERE user_id='$userid'");
 
 if ($sql) {
-  echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Customer Updated Successfully &#x1F44D;</strong> 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>';
+
+
+  $data=["msg"=>"Customer Updated Successfully"];
+
+
+
+  echo json_encode(array($data));
+ 
 }
 
 }
@@ -166,13 +183,17 @@ if (isset($_POST['userid']) && $_POST['status']=="delete") {
     $userid=$_POST['userid'];
   $sql=mysqli_query($conn,"DELETE FROM `users` WHERE user_id=$userid");
 
-  if($sql){
-    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>User Deleted Successfully &#x1F44D; </strong> 
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>';
+
+
+  if ($sql) {
+
+
+    $data=["msg"=>"User Deleted Successfully"];
+  
+  
+  
+    echo json_encode(array($data));
+   
   }
    
 }
